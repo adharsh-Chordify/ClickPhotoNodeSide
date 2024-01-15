@@ -195,4 +195,62 @@ const EditFunction=async(req,res)=>{
     
 }
 
-module.exports={Register,post,Login,getAll,getIndivitualdata,updateData,DeletePost,EditFunction}
+
+// const ForgotPassword =async (req,res)=>{
+//     const {Email,Password}=req.body
+
+
+
+//     const user=await User.findOne({where:{email:Email}})
+//     try{
+//         if(user){
+//             const hash=await bcrypt.hash(Password,10)
+//             const updatedRowsCount = await User.update(
+//                 { password : hash },
+//                 { where: { email:Email } }
+//               );
+
+//               if (updatedRowsCount) {
+//                 res.status(200).json({message:"Data has been updated"});
+//               } else {
+//                 res.status(404).json({ message: `User not found` });
+//               }
+//             } 
+//             }
+              
+//             catch (err) {
+//                 res.status(500).json({ error: err.message });
+//               }
+
+// }
+
+
+
+const ForgotPassword = async (req, res) => {
+    try {
+        const { Email, Password } = req.body;
+
+        const user = await User.findOne({ where: { email: Email } })
+
+        if (user) {
+            const hash = await bcrypt.hash(Password, 10)
+            const updatedRowsCount = await User.update(
+                { password: hash },
+                { where: { email: Email } }
+            )
+
+            if (updatedRowsCount) {
+                return res.status(200).json({ message: "Password has been updated" });
+            } else {
+                return res.status(404).json({ message: `Unable to Update Please Try Again Later` });
+            }
+        } else {
+            return res.status(404).json({ message: `User not found register first` });
+        }
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+
+module.exports={Register,post,Login,getAll,getIndivitualdata,updateData,DeletePost,EditFunction,ForgotPassword}

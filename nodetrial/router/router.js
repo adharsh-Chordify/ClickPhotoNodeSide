@@ -40,6 +40,7 @@ router.get('/getIndvitual/:uuid',midllewares,functionApi.getIndivitualdata)
 router.post('/updatepost',upload.single('img'),midllewares,functionApi.updateData)
 router.get('/deletepost/:id',midllewares,functionApi.DeletePost)
 router.get('/editpost/:id',functionApi.EditFunction)
+router.post('/forgotpassword',functionApi.ForgotPassword)
 
 
 module.exports=router
