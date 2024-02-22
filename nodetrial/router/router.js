@@ -16,8 +16,6 @@ const storage = multer.diskStorage({
   
   const upload = multer({ storage: storage });
 
-
-
 const registerSchema=Joi.object({
     Email:Joi.string().email().required(),
     firstName:Joi.string().required(),
@@ -41,6 +39,7 @@ router.post('/updatepost',upload.single('img'),midllewares,functionApi.updateDat
 router.get('/deletepost/:id',midllewares,functionApi.DeletePost)
 router.get('/editpost/:id',functionApi.EditFunction)
 router.post('/forgotpassword',functionApi.ForgotPassword)
+router.get('/getuser',functionApi.searchUser)
 
 
 module.exports=router

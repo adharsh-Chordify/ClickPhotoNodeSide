@@ -58,11 +58,6 @@ const Login=async(req,res)=>{
 
 
 
-
-
-
-
-
 const post=async(req,res)=>{
     const{UUID,caption}=req.body
     const img=req.file.filename
@@ -152,7 +147,6 @@ const updateData = async (req, res) => {
     }
   };
   
-
 
 const DeletePost=async(req,res)=>{
     const id=req.params.id
@@ -253,4 +247,25 @@ const ForgotPassword = async (req, res) => {
 };
 
 
-module.exports={Register,post,Login,getAll,getIndivitualdata,updateData,DeletePost,EditFunction,ForgotPassword}
+//searchAPI
+
+const searchUser = async (req, res) => {
+    try {
+        const value = req.query.search;
+        console.log(value);
+        const user = await User.findAll({ where: { fistName: value } });
+        if (user) {
+            return res.status(200).json({ message: "success", details: user });
+        } else {
+            return res.status(200).json({ message: value });
+        }
+    } catch (err) {
+        const value = req.params.search;
+        console.log(value);
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+
+
+module.exports={Register,post,Login,getAll,getIndivitualdata,updateData,DeletePost,EditFunction,ForgotPassword,searchUser}
